@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<RootNamespace>Chorn.AspNetCore.ProblemDetails.Sample</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+		<PackageReference Include="Swashbuckle.AspNetCore" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../Chorn.AspNetCore.ProblemDetails.Sample.Domain/Chorn.AspNetCore.ProblemDetails.Sample.Domain.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails/Chorn.AspNetCore.ProblemDetails.csproj" />
+		<!-- Referenced as an analyzer as well, so the sample proves the rules do not fire on correct code. -->
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.Analyzers/Chorn.AspNetCore.ProblemDetails.Analyzers.csproj"
+		                  ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.OpenApi/Chorn.AspNetCore.ProblemDetails.OpenApi.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.Swashbuckle/Chorn.AspNetCore.ProblemDetails.Swashbuckle.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Chorn.AspNetCore.ProblemDetails.Tests" />
+	</ItemGroup>
+
+</Project>

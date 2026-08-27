@@ -1,0 +1,17 @@
+<Project>
+	<PropertyGroup>
+		<Product>Chorn.AspNetCore.ProblemDetails</Product>
+		<Authors>Christoph Hornung</Authors>
+		<Copyright>Christoph Hornung</Copyright>
+		<TargetFramework>net10.0</TargetFramework>
+		<LangVersion>latest</LangVersion>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>true</ImplicitUsings>
+		<Deterministic>true</Deterministic>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
+		<!-- Every package in this repository ships together, so a single version governs all of them. -->
+		<!-- 0.x while the api settles: it is a normal release on nuget.org, not a prerelease. -->
+		<Version>0.9.0</Version>
+	</PropertyGroup>
+</Project>

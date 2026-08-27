@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Chorn.AspNetCore.ProblemDetails.Sample": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:57741;http://localhost:57742",
+      "launchUrl": "swagger"
+    }
+  }
+}

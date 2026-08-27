@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<PackageId>Chorn.AspNetCore.ProblemDetails</PackageId>
+		<Title>ASP.NET Core Explained Problem Details</Title>
+		<Description>Declare every problem your web api can answer with once, throw it from anywhere, and document it in your api description. RFC 9457 problem details with a developer-facing explanation, a lookup endpoint and open api examples.</Description>
+		<PackageTags>aspnetcore;problemdetails;problem-details;rfc9457;rfc7807;error-handling;webapi;openapi;exception-handler</PackageTags>
+		<PackageReleaseNotes>
+			v.0.9.0
+			- First release.
+		</PackageReleaseNotes>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<InternalsVisibleTo Include="Chorn.AspNetCore.ProblemDetails.Tests" />
+	</ItemGroup>
+
+	<!-- The analyzer ships inside this package, and runs on this project as well. -->
+	<ItemGroup>
+		<ProjectReference Include="../Chorn.AspNetCore.ProblemDetails.Analyzers/Chorn.AspNetCore.ProblemDetails.Analyzers.csproj"
+		                  ReferenceOutputAssembly="false" OutputItemType="Analyzer" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="../Chorn.AspNetCore.ProblemDetails.Analyzers/bin/$(Configuration)/netstandard2.0/Chorn.AspNetCore.ProblemDetails.Analyzers.dll"
+		      Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+	</ItemGroup>
+
+</Project>

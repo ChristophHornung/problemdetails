@@ -1,0 +1,101 @@
+name: 🐞 Bug report
+description: Report a problem with Chorn.AspNetCore.ProblemDetails
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for the report. A few details up front usually save a round trip.
+
+        Worth checking before filing:
+
+          * Are you on the [latest version](https://www.nuget.org/packages/Chorn.AspNetCore.ProblemDetails/)?
+          * If a thrown `ExplainedProblemException` does not turn into a problem response, is `app.UseExceptionHandler()` in the pipeline?
+          * If a problem is missing from the api document, does the endpoint name it with `[ProducesProblems<TProducer>]`, and is the matching integration registered?
+
+  - type: dropdown
+    id: packages
+    attributes:
+      label: Which packages are involved?
+      multiple: true
+      options:
+        - Chorn.AspNetCore.ProblemDetails
+        - Chorn.AspNetCore.ProblemDetails.Swashbuckle
+        - Chorn.AspNetCore.ProblemDetails.OpenApi
+    validations:
+      required: true
+
+  - type: input
+    id: package-version
+    attributes:
+      label: Package version
+      placeholder: "0.9.0"
+    validations:
+      required: true
+
+  - type: input
+    id: target-framework
+    attributes:
+      label: Target framework
+      placeholder: "net10.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Where does it happen?
+      multiple: true
+      options:
+        - Application startup
+        - A problem response
+        - The open api document
+        - The explanation endpoint
+        - Building (dotnet build or CI)
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of what went wrong.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: The smallest producer, endpoint and registration that shows the problem. Please paste text rather than screenshots so it can be copied and searched.
+      value: |
+        ```csharp
+        internal sealed class MyProblems : ProblemProducerBase
+        {
+            internal static ExplainedProblemDetails Example => new()
+            {
+                Title = "Example",
+                Status = StatusCodes.Status409Conflict,
+                Type = "/problems/example",
+                Explanation = "..."
+            };
+        }
+        ```
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual result
+      description: The response body, the relevant part of the api document, or the full error.
+    validations:
+      required: true

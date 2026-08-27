@@ -1,0 +1,99 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deployment:
+
+    # Publishing is irreversible and the tag points at whatever was built, so only main may do it.
+    if: github.ref == 'refs/heads/main'
+
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+      id-token: write
+
+    steps:
+    - uses: actions/checkout@v7
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v6
+      with:
+        dotnet-version: 10.0.x
+    - name: Restore dependencies
+      run: dotnet restore Chorn.AspNetCore.ProblemDetails.slnx
+    - name: Build
+      run: dotnet build Chorn.AspNetCore.ProblemDetails.slnx --no-restore --configuration Release
+    - name: Test
+      run: dotnet test --no-build --verbosity normal --configuration Release --project tests/Chorn.AspNetCore.ProblemDetails.Tests/Chorn.AspNetCore.ProblemDetails.Tests.csproj
+    - name: Archive nuget-package artifact
+      uses: actions/upload-artifact@v7
+      with:
+        name: nuget-packages
+        path: |
+          ${{ github.workspace }}/src/*/bin/Release/*.nupkg
+          ${{ github.workspace }}/src/*/bin/Release/*.snupkg
+    - name: Resolve package version
+      id: pkg
+      run: |
+        set -euo pipefail
+        nupkg=$(ls "${{ github.workspace }}"/src/Chorn.AspNetCore.ProblemDetails/bin/Release/Chorn.AspNetCore.ProblemDetails.*.nupkg)
+        version=$(basename "$nupkg" .nupkg)
+        version=${version#Chorn.AspNetCore.ProblemDetails.}
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+        echo "Resolved package version $version"
+    - name: Work out which packages still need publishing
+      id: publish
+      run: |
+        set -euo pipefail
+        version='${{ steps.pkg.outputs.version }}'
+        # The core package first - the two integrations depend on it.
+        pending=()
+        for package in Chorn.AspNetCore.ProblemDetails \
+                       Chorn.AspNetCore.ProblemDetails.OpenApi \
+                       Chorn.AspNetCore.ProblemDetails.Swashbuckle; do
+          id=$(echo "$package" | tr '[:upper:]' '[:lower:]')
+          if curl -sf "https://api.nuget.org/v3-flatcontainer/$id/index.json" \
+               | jq -e --arg v "$version" '.versions | index($v)' > /dev/null; then
+            echo "$package $version is already on nuget.org - skipping it."
+          else
+            pending+=("$package")
+          fi
+        done
+        if [ ${#pending[@]} -eq 0 ]; then
+          echo "::error::Every package already publishes $version - nothing would be pushed."
+          exit 1
+        fi
+        echo "packages=${pending[*]}" >> "$GITHUB_OUTPUT"
+        echo "Publishing: ${pending[*]}"
+    - name: NuGet login
+      uses: NuGet/login@v1
+      id: login
+      with:
+        user: ${{ secrets.NUGET_USER }}
+    - name: Push to NuGet
+      run: |
+        set -euo pipefail
+        version='${{ steps.pkg.outputs.version }}'
+        for package in ${{ steps.publish.outputs.packages }}; do
+          dotnet nuget push "${{ github.workspace }}/src/$package/bin/Release/$package.$version.nupkg" \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
+        done
+
+    - name: Tag the release
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        set -euo pipefail
+        version='${{ steps.pkg.outputs.version }}'
+        # A rerun that publishes only the packages a previous run missed must not fail on the existing tag.
+        if gh release view "v$version" > /dev/null 2>&1; then
+          echo "v$version is already released."
+          exit 0
+        fi
+        gh release create "v$version" \
+          --target "${{ github.sha }}" \
+          --title "v$version" \
+          --generate-notes

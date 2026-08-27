@@ -1,0 +1,34 @@
+<Solution>
+  <Folder Name="/SolutionItems/">
+    <File Path=".editorconfig" />
+    <File Path=".github/dependabot.yml" />
+    <File Path=".github/release.yml" />
+    <File Path=".github/workflows/deploy.yml" />
+    <File Path=".github/workflows/dotnet.yml" />
+    <File Path=".gitignore" />
+    <File Path="AGENTS.md" />
+    <File Path="CLAUDE.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="README.md" />
+    <File Path="global.json" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="src/Chorn.AspNetCore.ProblemDetails/Chorn.AspNetCore.ProblemDetails.csproj" />
+    <Project Path="src/Chorn.AspNetCore.ProblemDetails.Analyzers/Chorn.AspNetCore.ProblemDetails.Analyzers.csproj" />
+    <Project Path="src/Chorn.AspNetCore.ProblemDetails.OpenApi/Chorn.AspNetCore.ProblemDetails.OpenApi.csproj" />
+    <Project Path="src/Chorn.AspNetCore.ProblemDetails.Swashbuckle/Chorn.AspNetCore.ProblemDetails.Swashbuckle.csproj" />
+  </Folder>
+  <Folder Name="/samples/">
+    <Project Path="samples/Chorn.AspNetCore.ProblemDetails.Sample/Chorn.AspNetCore.ProblemDetails.Sample.csproj" />
+    <Project Path="samples/Chorn.AspNetCore.ProblemDetails.Sample.Domain/Chorn.AspNetCore.ProblemDetails.Sample.Domain.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Chorn.AspNetCore.ProblemDetails.Tests/Chorn.AspNetCore.ProblemDetails.Tests.csproj" />
+    <Project Path="tests/Chorn.AspNetCore.ProblemDetails.Tests.App/Chorn.AspNetCore.ProblemDetails.Tests.App.csproj" />
+    <Project Path="tests/Chorn.AspNetCore.ProblemDetails.Tests.Domain/Chorn.AspNetCore.ProblemDetails.Tests.Domain.csproj" />
+    <Project Path="tests/Chorn.AspNetCore.ProblemDetails.Tests.Producers/Chorn.AspNetCore.ProblemDetails.Tests.Producers.csproj" />
+    <Project Path="tests/Chorn.AspNetCore.ProblemDetails.Tests.Startup/Chorn.AspNetCore.ProblemDetails.Tests.Startup.csproj" />
+  </Folder>
+</Solution>

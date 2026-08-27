@@ -1,0 +1,51 @@
+# Every path through the sample, ready to send from Visual Studio, Rider or the VS Code REST client.
+# The data is in memory: restart the sample to reset it.
+
+@host = http://localhost:57742
+@ada = 00000000-0000-0000-0000-000000000001
+@bob = 00000000-0000-0000-0000-000000000002
+@cleo = 00000000-0000-0000-0000-000000000003
+@dan = 00000000-0000-0000-0000-000000000004
+@eve = 00000000-0000-0000-0000-000000000005
+
+### Cleo is signed up and in no tenant yet -> 204
+POST {{host}}/users/{{cleo}}/assign
+
+### Dan has not signed up -> 409 /problems/user/not-signed-up, thrown from the service
+POST {{host}}/users/{{dan}}/assign
+
+### Bob already belongs to acme -> 409 /problems/user/already-assigned
+POST {{host}}/users/{{bob}}/assign
+
+### Nobody has this id -> 404 /problems/user/unknown, declared once on the controller
+POST {{host}}/users/00000000-0000-0000-0000-000000000099/assign
+
+### One of Ada's orders -> 200
+GET {{host}}/users/{{ada}}/orders/1
+
+### Order 3 is Bob's -> 404 /problems/order/unknown
+GET {{host}}/users/{{ada}}/orders/3
+
+### Order 2 is open -> 204 the first time, 409 /problems/order/already-shipped after that
+POST {{host}}/orders/2/ship
+
+### Eve is an ordinary member -> 204
+DELETE {{host}}/users/{{eve}}
+
+### Ada is the last administrator -> 403 /problems/user/last-administrator, returned rather than thrown
+DELETE {{host}}/users/{{ada}}
+
+### The explanation for a type a caller received
+GET {{host}}/problems/user/not-signed-up
+
+### Every problem the application can produce
+GET {{host}}/problems
+
+### A deliberate failure to point client error handling at - development only
+GET {{host}}/problems/expected/418
+
+### The Swashbuckle document
+GET {{host}}/swagger/v1/swagger.json
+
+### The built-in document
+GET {{host}}/openapi/v1.json

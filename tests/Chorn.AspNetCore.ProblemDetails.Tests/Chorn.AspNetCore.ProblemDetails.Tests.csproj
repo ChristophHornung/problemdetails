@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+		<PackageReference Include="Microsoft.CodeAnalysis.CSharp" />
+		<PackageReference Include="TUnit" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="../../samples/Chorn.AspNetCore.ProblemDetails.Sample/Chorn.AspNetCore.ProblemDetails.Sample.csproj" />
+		<ProjectReference Include="../../samples/Chorn.AspNetCore.ProblemDetails.Sample.Domain/Chorn.AspNetCore.ProblemDetails.Sample.Domain.csproj" />
+		<ProjectReference Include="../Chorn.AspNetCore.ProblemDetails.Tests.App/Chorn.AspNetCore.ProblemDetails.Tests.App.csproj" />
+		<ProjectReference Include="../Chorn.AspNetCore.ProblemDetails.Tests.Producers/Chorn.AspNetCore.ProblemDetails.Tests.Producers.csproj" />
+		<ProjectReference Include="../Chorn.AspNetCore.ProblemDetails.Tests.Startup/Chorn.AspNetCore.ProblemDetails.Tests.Startup.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.Analyzers/Chorn.AspNetCore.ProblemDetails.Analyzers.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails/Chorn.AspNetCore.ProblemDetails.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.OpenApi/Chorn.AspNetCore.ProblemDetails.OpenApi.csproj" />
+		<ProjectReference Include="../../src/Chorn.AspNetCore.ProblemDetails.Swashbuckle/Chorn.AspNetCore.ProblemDetails.Swashbuckle.csproj" />
+	</ItemGroup>
+
+</Project>
