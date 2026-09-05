@@ -6,6 +6,8 @@
 		<Description>Documents the problems an endpoint declares with [ProducesProblems] as application/problem+json examples in a Swashbuckle open api document.</Description>
 		<PackageTags>aspnetcore;problemdetails;problem-details;rfc9457;swashbuckle;swagger;openapi;error-handling;webapi</PackageTags>
 		<PackageReleaseNotes>
+			v.0.9.1
+			- No changes. Released alongside the core package, which fixes its analyzer.
 			v.0.9.0
 			- First release.
 		</PackageReleaseNotes>

@@ -6,6 +6,9 @@
 		<Description>Declare every problem your web api can answer with once, throw it from anywhere, and document it in your api description. RFC 9457 problem details with a developer-facing explanation, a lookup endpoint and open api examples.</Description>
 		<PackageTags>aspnetcore;problemdetails;problem-details;rfc9457;rfc7807;error-handling;webapi;openapi;exception-handler</PackageTags>
 		<PackageReleaseNotes>
+			v.0.9.1
+			- The analyzer is built against Roslyn 4.9.2 again. 0.9.0 was built against 5.9.0, which a compiler older
+			  than that refuses to load (CS9057), so on an earlier SDK the rules silently did not run.
 			v.0.9.0
 			- First release.
 		</PackageReleaseNotes>
