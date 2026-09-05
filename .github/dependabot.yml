@@ -7,6 +7,9 @@ updates:
       interval: weekly
     commit-message:
       prefix: "⬆️"
+    ignore:
+      # The analyzer is built against the oldest Roslyn it should run on, on purpose - see Directory.Packages.props.
+      - dependency-name: "Microsoft.CodeAnalysis*"
     groups:
       aspnetcore:
         patterns:

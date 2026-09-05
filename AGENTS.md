@@ -90,6 +90,9 @@ snippets instead.
   Discovery walks the whole dependency closure, so one broken fixture in it fails every discovery test.
 - Do not let a test rely on the implicit discovery while the application resolves to the test assembly, which
   references `Tests.Producers`. Name the assembly, or stand a `FakeHost` in front of `Tests.App`.
+- Do not bump `Microsoft.CodeAnalysis.CSharp` for the analyzer. It is pinned to the oldest Roslyn the analyzer
+  should run on, because a compiler older than the referenced version refuses to load the analyzer (CS9057)
+  and builds without it without failing. Dependabot ignores it; a person has to know not to either.
 - Do not let the `Explanation` leak into a response body. It is for the api description and the explanation
   endpoint; `ToResponseJson` is the one place that decides what a caller sees.
 
