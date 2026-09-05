@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      contents: write
-      id-token: write
+      contents: write   # gh release create tags the commit
+      id-token: write   # NuGet trusted publishing: the OIDC token is exchanged for a temporary api key
 
     steps:
     - uses: actions/checkout@v7
@@ -67,7 +67,9 @@ jobs:
         fi
         echo "packages=${pending[*]}" >> "$GITHUB_OUTPUT"
         echo "Publishing: ${pending[*]}"
-    - name: NuGet login
+    # No api key is stored anywhere. nuget.org trusts this repository and workflow through a trusted publishing
+    # policy on the user, and NuGet/login turns the run's OIDC token into a key that lasts minutes.
+    - name: NuGet login (OIDC -> temporary api key)
       uses: NuGet/login@v1
       id: login
       with:

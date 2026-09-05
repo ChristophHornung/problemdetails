@@ -119,4 +119,10 @@ dotnet run --project samples/Chorn.AspNetCore.ProblemDetails.Sample
 3. Merge to `main`, then run the `Deployment` workflow manually.
 
 The workflow refuses to publish a version that is already on nuget.org, pushes all three packages and tags the
-release. It needs the `NUGET_USER` secret.
+release.
+
+Publishing uses nuget.org trusted publishing, not an api key: `NuGet/login` exchanges the run's OIDC token for a
+key that lasts minutes, so nothing long-lived is stored anywhere. One-time setup: on nuget.org, under the
+account's *Trusted Publishing*, add a policy for the repository `ChristophHornung/problemdetails` and the workflow
+file `deploy.yml`; in the repository settings, add the secret `NUGET_USER` holding the nuget.org username that
+policy belongs to. That is the only secret.
